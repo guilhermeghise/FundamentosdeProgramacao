@@ -30,12 +30,16 @@ public class Datas {
         // Imprimir resultado
         System.out.println("Signo da pessoa: " + signo);
         
+         // Calcular o dia da semana
+        String diaSemanaNascimento = calcularDiaDaSemana(anoAniversario, mesAniversario, diaAniversario);
+        System.out.println("Dia da semana do seu nascimento: " + diaSemanaNascimento);
+        
         if (diaAniversario == diaHoje && mesAniversario == mesHoje) {
             System.out.println("Parabéns pelo seu aniversário!");
         } else if (mesAniversario < mesHoje || (mesAniversario == mesHoje && diaAniversario < diaHoje)) {
-            System.out.println("Seu aniversário já passou. Passaram SEI LA dias desde o seu último aniversário.");
+            System.out.println("Seu aniversário já passou. Passaram .... dias desde o seu último aniversário.");
         } else {
-            System.out.println("Seu aniversário ainda não chegou. Faltam SEI LA dias para o seu próximo aniversário.");
+            System.out.println("Seu aniversário ainda não chegou. Faltam .... dias para o seu próximo aniversário.");
         }
     }
 
@@ -85,4 +89,23 @@ public class Datas {
     public static boolean ehAnoBissexto(int ano) {
         return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
     }
+    
+    // Método para calcular o dia da semana da data de nascimento (Algoritmo de Zeller's Congruence)
+    public static String calcularDiaDaSemana(int ano, int mes, int dia) {
+        int y = ano - (14 - mes) / 12;
+        int x = y + y/4 - y/100 + y/400;
+        int m = mes + 12 * ((14 - mes) / 12) - 2;
+        int d = (dia + x + (31 * m) / 12) % 7;
+
+        switch (d) {
+            case 0: return "Domingo";
+            case 1: return "Segunda-feira";
+            case 2: return "Terça-feira";
+            case 3: return "Quarta-feira";
+            case 4: return "Quinta-feira";
+            case 5: return "Sexta-feira";
+            case 6: return "Sábado";
+            default: return "Erro ao calcular dia da semana";
+        }
+}
 }
